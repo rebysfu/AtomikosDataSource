@@ -32,7 +32,7 @@ public final class WebHelper {
      * @throws IOException
      */
     public static void writeMessage(HttpServletResponse response, HttpStatus httpStatus) throws IOException {
-        response.setStatus(org.springframework.http.HttpStatus.OK.value());
+        response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         PrintWriter printWriter = response.getWriter();
         printWriter.write(ResponseVo.builder().code(httpStatus).build().toJSONString());
@@ -45,7 +45,7 @@ public final class WebHelper {
      * @throws IOException
      */
     public static void writeMessage(HttpServletResponse response, ResponseVo responseVo) throws IOException {
-        response.setStatus(org.springframework.http.HttpStatus.OK.value());
+        response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         PrintWriter printWriter = response.getWriter();
         printWriter.write(responseVo.toJSONString());

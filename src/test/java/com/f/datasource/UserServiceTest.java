@@ -1,14 +1,12 @@
 package com.f.datasource;
 
-import com.f.datasource.api.switcher.DataSourceSwitcher;
-import com.f.datasource.api.switcher.DefaultDataSourceSwitcher;
 import com.f.mvc.entity.User;
+import com.f.mvc.entity.UserRole;
 import com.f.mvc.service.UserService;
 import org.junit.Test;
 
 import javax.annotation.Resource;
 
-import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -34,16 +32,20 @@ public class UserServiceTest extends ServiceBaseTest {
     @Test
     public void addUser() {
         User user = new User();
-        user.setAccount("ttttttttt");
+        user.setAccount("admin");
         user.setId(1L);
-        user.setPassword("123456");
-        user.setCreateTime(new Date());
-        userService.testTraction(user,new long[]{1});
-       // userService.testTraction(user);
+        UserRole userRole=new UserRole();
+       long[] roleIds={1,2,3};
+        userService.testTraction(user,roleIds);
     }
 
 
-    DataSourceSwitcher switcher = new DefaultDataSourceSwitcher();
+    public static void main(String[] args) {
+
+
+
+    }
+ /*   DataSourceSwitcher switcher = new DefaultDataSourceSwitcher();
 
     @Test
     public void testChangeSwitcher() {
@@ -67,6 +69,6 @@ public class UserServiceTest extends ServiceBaseTest {
         switcher.useLast();
         assertTrue(switcher.currentDataSourceId() == null);
         ;
-    }
+    }*/
 
 }

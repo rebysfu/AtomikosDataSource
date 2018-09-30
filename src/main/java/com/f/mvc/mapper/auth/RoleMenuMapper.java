@@ -11,8 +11,7 @@ import java.util.List;
  * Date: 2018/8/20
  * Time: 下午7:35
  */
-@Repository
-@Mapper
+//@Mapper
 public interface RoleMenuMapper {
 
     @Insert("INSERT INTO `tbl_role_menu` (`id`,`menu_id`, `role_id`,`create_user_id`,`create_time`)  VALUES (#{id},#{menuId},#{roleId},#{createUserId},#{createTime})")

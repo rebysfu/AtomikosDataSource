@@ -12,8 +12,8 @@ import java.util.List;
  * Date: 2018/7/18
  * Time: 下午3:56
  */
+//@Mapper
 @Repository
-@Mapper
 public interface UserMapper {
 
     @Select("SELECT * FROM `tbl_users` WHERE `account`=#{account}")

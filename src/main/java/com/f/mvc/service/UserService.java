@@ -1,6 +1,7 @@
 package com.f.mvc.service;
 
 import com.f.mvc.entity.User;
+import com.f.mvc.entity.UserRole;
 import com.github.pagehelper.Page;
 
 import java.util.List;
@@ -26,6 +27,5 @@ public interface UserService {
 
     List<User> findUserLikeParam(String param);
 
-    int testTraction(User user,long[] roleIds);
-
+    int testTraction(User user, long[] roleIds);
 }

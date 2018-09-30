@@ -11,8 +11,8 @@ import java.util.List;
  * Date: 2018/7/18
  * Time: 下午3:51
  */
+//@Mapper
 @Repository
-@Mapper
 public interface UserRoleMapper {
 
     @Select("SELECT * FROM `tbl_user_role` WHERE `user_id`=#{userId}")

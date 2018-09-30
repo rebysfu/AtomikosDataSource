@@ -5,7 +5,6 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.common.collect.Maps;
 import org.springframework.http.HttpStatus;
 
-import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Map;
@@ -138,7 +137,7 @@ public class ResponseVo implements Serializable {
             return this;
         }
 
-        public ResponseVoBuilder data(@Nullable Object data) {
+        public ResponseVoBuilder data(Object data) {
             this.data = data;
             return this;
         }

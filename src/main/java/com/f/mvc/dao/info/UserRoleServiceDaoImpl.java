@@ -1,9 +1,10 @@
 package com.f.mvc.dao.info;
 
 import com.f.constants.DataSourceKey;
-import com.f.datasource.api.annotation.DataSource;
+import com.f.datasource.annotations.DataSource;
 import com.f.mvc.entity.UserRole;
 import com.f.mvc.mapper.info.InfoUserRoleMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -28,5 +29,4 @@ public class UserRoleServiceDaoImpl implements UserRoleServiceDao {
     public int addUserRole(UserRole userRole) {
         return infoUserRoleMapper.addUserRole(userRole);
     }
-
 }

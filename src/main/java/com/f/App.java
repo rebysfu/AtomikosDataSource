@@ -1,5 +1,6 @@
 package com.f;
 
+import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -20,7 +21,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * Time: 上午10:48
  */
 @SpringBootApplication
-@EnableScheduling
 @ServletComponentScan
 @EnableCaching
 @EnableSwagger2

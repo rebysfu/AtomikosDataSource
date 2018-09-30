@@ -1,10 +1,10 @@
 package com.f.mvc.dao.auth;
 
 import com.f.constants.DataSourceKey;
-import com.f.datasource.api.annotation.DataSource;
-import com.f.datasource.api.annotation.UseDefaultDataSource;
+import com.f.datasource.annotations.DataSource;
 import com.f.mvc.entity.User;
 import com.f.mvc.mapper.auth.UserMapper;
+import com.f.mvc.mapper.auth.UserRoleMapper;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -19,7 +19,7 @@ public class UserServiceDaoImpl implements UserServiceDao {
     @Resource
     private UserMapper userMapper;
 
-    @UseDefaultDataSource
+    @DataSource(DataSourceKey.MASTER)
     @Override
     public int modifyUser(User user) {
         return userMapper.modifyUser(user);
@@ -29,5 +29,4 @@ public class UserServiceDaoImpl implements UserServiceDao {
     public int addUser(User user) {
         return userMapper.addUser(user);
     }
-
 }

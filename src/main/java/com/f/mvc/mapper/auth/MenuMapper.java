@@ -11,8 +11,7 @@ import java.util.List;
  * Date: 2018/8/20
  * Time: 下午7:23
  */
-@Repository
-@Mapper
+//@Mapper
 public interface MenuMapper {
 
     @Insert("INSERT INTO `tbl_menu` (`url`, `name`,`type`, `create_user_id`, `create_time`, `modify_user_id`, `modify_time`)  VALUES (#{url},#{name},#{type},#{createUserId},#{createTime},#{modifyUserId},#{modifyTime})")

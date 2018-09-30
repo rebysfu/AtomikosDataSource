@@ -11,8 +11,7 @@ import java.util.List;
  * Date: 2018/7/18
  * Time: 下午3:38
  */
-@Repository
-@Mapper
+//@Mapper
 public interface SysRoleMapper {
 
     @Select("SELECT * FROM `tbl_sys_role`")

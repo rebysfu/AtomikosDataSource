@@ -11,5 +11,4 @@ import com.f.mvc.entity.UserRole;
 public interface UserRoleServiceDao {
     int deleteUserByUserId(UserRole user);
     int addUserRole(UserRole userRole);
-
 }
