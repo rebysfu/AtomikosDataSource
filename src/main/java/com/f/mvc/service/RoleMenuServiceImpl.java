@@ -1,7 +1,7 @@
 package com.f.mvc.service;
 
+import com.f.mvc.dao.auth.RoleMenuDao;
 import com.f.mvc.entity.RoleMenu;
-import com.f.mvc.mapper.auth.RoleMenuMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -19,12 +19,12 @@ import java.util.List;
 public class RoleMenuServiceImpl implements RoleMenuService {
 
     @Autowired
-    private RoleMenuMapper roleMenuMapper;
+    private RoleMenuDao roleMenuDao;
 
     @Override
     @CacheEvict(value = "roleMenuCache", key = "#p0.roleId")
     public int addNewRow(RoleMenu roleMenu) {
-        return roleMenuMapper.addNewRow(roleMenu);
+        return roleMenuDao.addNewRow(roleMenu);
     }
 
     @Override
@@ -34,23 +34,23 @@ public class RoleMenuServiceImpl implements RoleMenuService {
     })
 
     public int deleteRoleMenuById(RoleMenu roleMenu) {
-        return roleMenuMapper.deleteRoleMenuById(roleMenu);
+        return roleMenuDao.deleteRoleMenuById(roleMenu);
     }
 
     @Override
     @Cacheable(value = "roleMenuCache", key = "#p0", unless = "#result.isEmpty()")
     public List<RoleMenu> findRoleMenuByRoleId(Long roleId) {
-        return roleMenuMapper.findRoleMenuByRoleId(roleId);
+        return roleMenuDao.findRoleMenuByRoleId(roleId);
     }
 
     @Override
     @Cacheable(value = "roleMenuIdCache", key = "#p0", unless = "#result==null")
     public RoleMenu findRoleMenuById(Long id) {
-        return roleMenuMapper.findRoleMenuById(id);
+        return roleMenuDao.findRoleMenuById(id);
     }
 
     @Override
     public List<RoleMenu> findAllRoleMenu() {
-        return roleMenuMapper.findAllRoleMenu();
+        return roleMenuDao.findAllRoleMenu();
     }
 }

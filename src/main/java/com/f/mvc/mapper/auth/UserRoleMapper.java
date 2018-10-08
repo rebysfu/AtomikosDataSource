@@ -11,15 +11,15 @@ import java.util.List;
  * Date: 2018/7/18
  * Time: 下午3:51
  */
+//@Mapper
 @Repository
-@Mapper
 public interface UserRoleMapper {
 
     @Select("SELECT * FROM `tbl_user_role` WHERE `user_id`=#{userId}")
     List<UserRole> findByUserId(@Param(value = "userId") final Long userId);
 
     @Insert("INSERT INTO `tbl_user_role` (`sys_role_id`,`user_id`,`create_user_id`,`create_time`) VALUES(#{sysRoleId},#{userId},#{createUserId},#{createTime})")
-    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "id", before = false, resultType = Long.class)
+    @Options(useGeneratedKeys = true)
     int addUserRole(UserRole userRole);
 
     @Delete("DELETE FROM `tbl_user_role` WHERE `id`=#{id}")
@@ -29,6 +29,6 @@ public interface UserRoleMapper {
     int deleteUserRoleByParam(@Param(value = "userId") long userId, @Param(value = "param") String param);
 
     @Delete("DELETE FROM `tbl_user_role` WHERE `user_id`=#{userId}")
-    int deleteUserByUserId(@Param(value = "userId") Long userId);
+    int deleteUserRoleByUserId(@Param(value = "userId") Long userId);
 
 }

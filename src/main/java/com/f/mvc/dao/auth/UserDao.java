@@ -1,4 +1,4 @@
-package com.f.mvc.service;
+package com.f.mvc.dao.auth;
 
 import com.f.mvc.entity.User;
 import com.github.pagehelper.Page;
@@ -6,17 +6,17 @@ import com.github.pagehelper.Page;
 import java.util.List;
 
 /**
- * User: bvsoo
- * Date: 2018/6/28
- * Time: 下午12:13
- */
-public interface UserService {
+ * @author rebysfu@gmail.com
+ * @description：
+ * @create 2018-09-24 下午2:17
+ **/
+public interface UserDao {
+
+    int addUser(User user);
 
     User findUserByAccount(String account);
 
     User findUserById(Long id);
-
-    int addUser(User user, long[] roleIds);
 
     int modifyUser(User user);
 

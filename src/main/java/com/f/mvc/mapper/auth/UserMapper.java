@@ -12,8 +12,8 @@ import java.util.List;
  * Date: 2018/7/18
  * Time: 下午3:56
  */
+//@Mapper
 @Repository
-@Mapper
 public interface UserMapper {
 
     @Select("SELECT * FROM `tbl_users` WHERE `account`=#{account}")
@@ -23,7 +23,7 @@ public interface UserMapper {
     User findUserById(@Param(value = "id") final Long id);
 
     @Insert("INSERT INTO `tbl_users` (`account`, `create_time`, `create_user_id`, `modify_user_id`,`modify_time`, `name`, `nick_name`, `password`, `phone`, `remark`) VALUES (#{account},#{createTime},#{createUserId},#{modifyUserId},#{modifyTime},#{name},#{nickName},#{password},#{phone},#{remark})")
-    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "id", before = false, resultType = Long.class)
+    @Options(useGeneratedKeys = true)
     int addUser(User user);
 
     @Delete("DELETE FROM `tbl_users` WHERE `id`=#{id}")

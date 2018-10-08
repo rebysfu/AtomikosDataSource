@@ -62,27 +62,6 @@ public class UserAction extends BaseAction {
      * @param request
      * @return
      */
-    @ApiOperation(value = "/test", notes = "测试多线程高并发")
-    @RequestMapping(value = "/test", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseVo test(HttpServletRequest request,
-                           @RequestParam(value = "account", defaultValue = "") String account,
-                           @RequestParam(value = "password", defaultValue = "") String password,
-                           @RequestParam(value = "roleIds") long[] roleIds) {
-
-        User user = new User();
-        user.setAccount(account);
-        user.setPassword(password);
-        userService.testTraction(user, roleIds);
-        return ResponseVo.builder().data(user).build();
-    }
-
-
-    /**
-     * 查询账号的菜单
-     *
-     * @param request
-     * @return
-     */
     @ApiOperation(value = "/menus", notes = "查询菜单")
     @RequestMapping(value = "/menus", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseVo menus(HttpServletRequest request) {
@@ -115,7 +94,7 @@ public class UserAction extends BaseAction {
             return ResponseVo.builder().code(HttpStatus.BAD_REQUEST).build();
         Page<User> userPage = PageHelper.startPage(page, size);
         userService.findUserByParam(Strings.isNullOrEmpty(keyword) ? null : keyword, userPage);
-        return ResponseVo.builder().data(userPage).build();
+        return ResponseVo.builder().data(userPage.toPageInfo()).build();
     }
 
 

@@ -2,7 +2,6 @@ package com.f.mvc.mapper.auth;
 
 import com.f.mvc.entity.RoleMenu;
 import org.apache.ibatis.annotations.*;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -11,12 +10,11 @@ import java.util.List;
  * Date: 2018/8/20
  * Time: 下午7:35
  */
-@Repository
-@Mapper
+//@Mapper
 public interface RoleMenuMapper {
 
     @Insert("INSERT INTO `tbl_role_menu` (`id`,`menu_id`, `role_id`,`create_user_id`,`create_time`)  VALUES (#{id},#{menuId},#{roleId},#{createUserId},#{createTime})")
-    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "id", before = false, resultType = Long.class)
+    @Options(useGeneratedKeys = true)
     int addNewRow(RoleMenu roleMenu);
 
     @Delete("DELETE FROM `tbl_role_menu` WHERE `id`=#{id}")

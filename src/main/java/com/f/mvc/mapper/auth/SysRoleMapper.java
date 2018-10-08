@@ -1,8 +1,10 @@
 package com.f.mvc.mapper.auth;
 
 import com.f.mvc.entity.SysRole;
-import org.apache.ibatis.annotations.*;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -11,8 +13,7 @@ import java.util.List;
  * Date: 2018/7/18
  * Time: 下午3:38
  */
-@Repository
-@Mapper
+//@Mapper
 public interface SysRoleMapper {
 
     @Select("SELECT * FROM `tbl_sys_role`")
@@ -25,7 +26,7 @@ public interface SysRoleMapper {
     SysRole findSysRoleByRole(@Param(value = "role") final String role);
 
     @Insert("INSERT INTO `tbl_sys_role` (`role`,`name`,`create_user_id`,`create_time`) VALUES (#{role},#{name},#{createUserId},#{createTime})")
-    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "id", before = false, resultType = Long.class)
+    @Options(useGeneratedKeys = true)
     int addSysRole(SysRole role);
 
 }

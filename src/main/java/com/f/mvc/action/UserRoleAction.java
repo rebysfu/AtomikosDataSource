@@ -64,6 +64,24 @@ public class UserRoleAction extends BaseAction {
 
 
     /**
+     * 管理员查询用户的角色
+     *
+     * @param userId
+     * @return
+     */
+    @ApiOperation(value = "/manager/query", notes = "管理员查询用户角色")
+    @RequestMapping(value = "/manager/query", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//    @PreAuthorize("hasAnyRole('admin')")
+    public ResponseVo managerQuery(@RequestParam(value = "userId", defaultValue = "0") long userId) {
+        if (userId < 1)
+            return ResponseVo.builder().code(HttpStatus.BAD_REQUEST).build();
+        List<UserRole> userRoles = userRoleService.findByUserId(userId);
+        List<SysRole> sysRoles = userRoles.stream().map(o -> sysRoleService.findSysRoleById(o.getSysRoleId())).collect(Collectors.toList());
+        return ResponseVo.builder().data(sysRoles).build();
+    }
+
+
+    /**
      * 添加角色
      *
      * @param userId

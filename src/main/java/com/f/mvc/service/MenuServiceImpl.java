@@ -1,9 +1,9 @@
 package com.f.mvc.service;
 
+import com.f.mvc.dao.auth.MenuDao;
+import com.f.mvc.dao.auth.RoleMenuDao;
 import com.f.mvc.entity.Menu;
 import com.f.mvc.entity.RoleMenu;
-import com.f.mvc.mapper.auth.MenuMapper;
-import com.f.mvc.mapper.auth.RoleMenuMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -23,10 +23,10 @@ import java.util.List;
 public class MenuServiceImpl implements MenuService {
 
     @Autowired
-    private MenuMapper menuMapper;
+    private MenuDao menuDao;
 
     @Autowired
-    private RoleMenuMapper roleMenuMapper;
+    private RoleMenuDao roleMenuDao;
 
     @Override
     @Caching(evict = {
@@ -36,14 +36,14 @@ public class MenuServiceImpl implements MenuService {
     })
     @Transactional
     public int addNewMenu(Menu menu) {
-        int row = menuMapper.addNewMenu(menu);
+        int row = menuDao.addNewMenu(menu);
         if (row > 0) {
             RoleMenu roleMenu = new RoleMenu();
             roleMenu.setMenuId(menu.getId());
             roleMenu.setRoleId(1L);
             roleMenu.setCreateTime(new Date());
             roleMenu.setCreateUserId(1L);
-            row = roleMenuMapper.addNewRow(roleMenu);
+            row = roleMenuDao.addNewRow(roleMenu);
         }
         return row;
     }
@@ -51,7 +51,7 @@ public class MenuServiceImpl implements MenuService {
     @Override
     @Cacheable(value = "menuCache", key = "#p0", unless = "#result==null")
     public Menu findMenuById(Long id) {
-        return menuMapper.findMenuById(id);
+        return menuDao.findMenuById(id);
     }
 
     @Override
@@ -62,8 +62,8 @@ public class MenuServiceImpl implements MenuService {
     })
 
     public int deleteMenuById(Menu menu) {
-        roleMenuMapper.deleteRoleMenuByMenuId(menu.getId());
-        return menuMapper.deleteMenuById(menu);
+        roleMenuDao.deleteRoleMenuByMenuId(menu.getId());
+        return menuDao.deleteMenuById(menu);
     }
 
     @Override
@@ -73,12 +73,12 @@ public class MenuServiceImpl implements MenuService {
             @CacheEvict(value = "menuAllCache", allEntries = true)
     })
     public int updateMenu(Menu menu) {
-        return menuMapper.updateMenu(menu);
+        return menuDao.updateMenu(menu);
     }
 
     @Override
     @Cacheable(value = "menuAllCache", unless = "#result.isEmpty()")
     public List<Menu> findAllMenu() {
-        return menuMapper.findAllMenu();
+        return menuDao.findAllMenu();
     }
 }

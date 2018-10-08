@@ -1,7 +1,7 @@
 package com.f.mvc.service;
 
+import com.f.mvc.dao.auth.SysRoleDao;
 import com.f.mvc.entity.SysRole;
-import com.f.mvc.mapper.auth.SysRoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -19,18 +19,18 @@ import java.util.List;
 public class SysRoleServiceImpl implements SysRoleService {
 
     @Autowired
-    private SysRoleMapper sysRoleMapper;
+    private SysRoleDao sysRoleDao;
 
     @Override
     @Cacheable(value = "sysRoleAllCache", unless = "#result.isEmpty()")
     public List<SysRole> findAll() {
-        return sysRoleMapper.findAllSysRole();
+        return sysRoleDao.findAllSysRole();
     }
 
     @Override
     @Cacheable(value = "sysRoleCache", key = "#p0", unless = "#result==null")
     public SysRole findSysRoleById(Long id) {
-        return sysRoleMapper.findSysRoleById(id);
+        return sysRoleDao.findSysRoleById(id);
     }
 
     /**
@@ -40,7 +40,7 @@ public class SysRoleServiceImpl implements SysRoleService {
     @Override
     @Cacheable(value = "sysRoleRoleCache", key = "#p0", unless = "#result==null")
     public SysRole findSysRoleByRole(String role) {
-        return sysRoleMapper.findSysRoleByRole(role);
+        return sysRoleDao.findSysRoleByRole(role);
     }
 
     /**
@@ -54,6 +54,6 @@ public class SysRoleServiceImpl implements SysRoleService {
             @CacheEvict(value = "sysRoleRoleCache", allEntries = true)
     })
     public int addSysRole(SysRole sysRole) {
-        return sysRoleMapper.addSysRole(sysRole);
+        return sysRoleDao.addSysRole(sysRole);
     }
 }
