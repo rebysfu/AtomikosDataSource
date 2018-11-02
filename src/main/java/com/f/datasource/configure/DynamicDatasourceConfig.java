@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DynamicDatasourceConfig {
-    private boolean defalut;
+    private boolean primary;
     private String url;
     private String username;
     private String password;

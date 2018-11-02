@@ -1,6 +1,6 @@
 package com.f.mvc.mapper.auth;
 
-import com.f.mvc.entity.SysRole;
+import com.f.mvc.entity.auth.SysRole;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;

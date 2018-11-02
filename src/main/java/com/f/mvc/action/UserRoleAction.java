@@ -1,12 +1,12 @@
 package com.f.mvc.action;
 
 import com.f.base.BaseAction;
-import com.f.mvc.entity.SysRole;
-import com.f.mvc.entity.User;
-import com.f.mvc.entity.UserRole;
-import com.f.mvc.service.SysRoleService;
-import com.f.mvc.service.UserRoleService;
-import com.f.mvc.service.UserService;
+import com.f.mvc.entity.auth.SysRole;
+import com.f.mvc.entity.auth.User;
+import com.f.mvc.entity.auth.UserRole;
+import com.f.mvc.service.auth.SysRoleService;
+import com.f.mvc.service.auth.UserRoleService;
+import com.f.mvc.service.auth.UserService;
 import com.f.vo.ResponseVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -71,7 +71,6 @@ public class UserRoleAction extends BaseAction {
      */
     @ApiOperation(value = "/manager/query", notes = "管理员查询用户角色")
     @RequestMapping(value = "/manager/query", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    @PreAuthorize("hasAnyRole('admin')")
     public ResponseVo managerQuery(@RequestParam(value = "userId", defaultValue = "0") long userId) {
         if (userId < 1)
             return ResponseVo.builder().code(HttpStatus.BAD_REQUEST).build();

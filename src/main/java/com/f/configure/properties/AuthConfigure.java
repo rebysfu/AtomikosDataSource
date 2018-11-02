@@ -3,7 +3,6 @@ package com.f.configure.properties;
 import com.google.common.base.Strings;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
@@ -15,7 +14,6 @@ import java.io.Serializable;
  */
 @Data
 @ConfigurationProperties(prefix = "spring.auth")
-@PropertySource("classpath:auth.properties")
 @Component
 public class AuthConfigure implements Serializable {
     public static final String DEFAULT_ACCOUNT = "admin";

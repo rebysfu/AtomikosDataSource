@@ -1,6 +1,7 @@
 package com.f.datasource;
 
 
+import com.f.mvc.service.server.BrandTunnelRelationService;
 import org.junit.Test;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -14,8 +15,12 @@ import javax.annotation.Resource;
 public class UserDetailsServiceTest extends ServiceBaseTest {
     @Resource
     private UserDetailsService userDetailsService;
+
+    @Resource
+    private BrandTunnelRelationService brandTunnelRelationService;
+
     @Test
-    public void loadUserByUsername(){
+    public void loadUserByUsername() {
         userDetailsService.loadUserByUsername("admin");
     }
 }

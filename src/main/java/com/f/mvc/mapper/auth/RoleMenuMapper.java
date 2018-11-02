@@ -1,6 +1,6 @@
 package com.f.mvc.mapper.auth;
 
-import com.f.mvc.entity.RoleMenu;
+import com.f.mvc.entity.auth.RoleMenu;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

@@ -1,7 +1,9 @@
 package com.f.enums;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,23 +43,24 @@ public enum TunnelType {
     XINXIN("新新闪付"),
     YISHAN("一闪"),
     YOTA("YOTA"),
-
-
     ;
 
-    private static Map<Integer, TunnelType> CACHE = Maps.newHashMap();
-    private static Map<TunnelType, String> TYPE2NAME = Maps.newHashMap();
+    private static final Map<Integer, TunnelType> CACHE = Maps.newHashMap();
+    private static final Map<Integer, String> map = Maps.newHashMap();
+    private static final List<Map<String, Object>> mapList = Lists.newArrayList();
 
     static {
         for (TunnelType type : TunnelType.values()) {
             CACHE.put(type.ordinal(), type);
-            TYPE2NAME.put(type, type.name);
+            map.put(type.ordinal(), type.name);
+            mapList.add(type.toMap());
         }
     }
 
     private final String name;
 
-    private TunnelType(String name) {
+
+    TunnelType(String name) {
         this.name = name;
     }
 
@@ -65,12 +68,23 @@ public enum TunnelType {
         return CACHE.get(ordinal);
     }
 
-    public static final Map<TunnelType, String> getType2Name() {
-        return TYPE2NAME;
+    public static final Map<Integer, String> getMap() {
+        return map;
+    }
+
+    public static List<Map<String, Object>> getMapList() {
+        return mapList;
     }
 
     public static final Map<Integer, TunnelType> getCache() {
         return CACHE;
+    }
+
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = Maps.newHashMap();
+        map.put("ordinal", this.ordinal());
+        map.put("name", this.getName());
+        return map;
     }
 
     public String getName() {

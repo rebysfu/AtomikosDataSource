@@ -13,6 +13,11 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 
+/**
+ * @author rebysfu@gmail.com
+ * @description： 数据源切换注解
+ * @create 2018-09-27 下午1:27
+ **/
 @Aspect
 @Component
 @Order(1)

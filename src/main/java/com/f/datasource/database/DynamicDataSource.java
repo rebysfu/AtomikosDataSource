@@ -16,13 +16,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by yu on 2017/3/21.
- */
+ * @author rebysfu@gmail.com
+ * @description： 数据源切换注解
+ * @create 2018-09-27 下午1:27
+ **/
 @Log4j2
 public class DynamicDataSource extends AbstractRoutingDataSource {
 
     private final static String DATASOURCE_CLASS = "com.alibaba.druid.pool.DruidDataSource";
-    private String defalutDataSourceId;
+    private String defaultDataSourceId;
     @Resource
     private DynamicDataSourceProperties properties;
 
@@ -31,7 +33,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
      */
     @Override
     protected Object determineCurrentLookupKey() {
-        log.warn("Current DataSource is [{}]", StringUtils.isEmpty(DataSourceContextHolder.getDataSourceKey()) ? defalutDataSourceId : DataSourceContextHolder.getDataSourceKey());
+        log.warn("Current DataSource is [{}]", StringUtils.isEmpty(DataSourceContextHolder.getDataSourceKey()) ? defaultDataSourceId : DataSourceContextHolder.getDataSourceKey());
         return DataSourceContextHolder.getDataSourceKey();
     }
 
@@ -45,25 +47,27 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
         Map<Object, Object> targetDataSource = new HashMap<Object, Object>();
         Object defaultTargetDataSource = null;
         Map<String, DynamicDatasourceConfig> map = properties.getDatasource();
+        int dataSourceSize = map.size();
         for (Map.Entry<String, DynamicDatasourceConfig> entry : map.entrySet()) {
             String dataSourceId = entry.getKey();
             if (DataSourceKey.isNotDefined(dataSourceId)) {
-                throw new RuntimeException("The DataSource【 " + dataSourceId + " 】Didn't find in " + DataSourceKey.class);
+                throw new RuntimeException("The DataSource【 " + dataSourceId + " 】not found in " + DataSourceKey.class);
             }
             DynamicDatasourceConfig dynamicDatasourceConfig = entry.getValue();
-            boolean isDefaultDataSource = dynamicDatasourceConfig.isDefalut();
+            boolean isDefaultDataSource = dynamicDatasourceConfig.isPrimary();
             DruidDataSource dataSource = (DruidDataSource) ClassUtils.newInstance(DATASOURCE_CLASS);
             DynamicDatasourceUtils.setDsProperties(dynamicDatasourceConfig, dataSource);
             targetDataSource.put(dataSourceId, dataSource);
-            if (Boolean.valueOf(isDefaultDataSource)) {
+            if (Boolean.valueOf(isDefaultDataSource) || dataSourceSize == 1) {
                 defaultTargetDataSource = dataSource;
-                defalutDataSourceId = dataSourceId;
+                defaultDataSourceId = dataSourceId;
+                DataSourceContextHolder.setDefaultDataSourceKey(defaultDataSourceId);
             }
             log.info("dataSourceId={},dataSourceClass={},isDefaultDataSource={}", new Object[]{
                     dataSourceId, DATASOURCE_CLASS, isDefaultDataSource});
         }
         if (defaultTargetDataSource == null) {
-            throw new RuntimeException("Data source configuration errors, you must set a default data source, such as: a new defalut attribute in the configuration file, the value is true");
+            throw new RuntimeException("Data source configuration error, You must set a default data source, such as: a new default attribute in the configuration file, the value is true");
         }
         this.setTargetDataSources(targetDataSource);
         this.setDefaultTargetDataSource(defaultTargetDataSource);

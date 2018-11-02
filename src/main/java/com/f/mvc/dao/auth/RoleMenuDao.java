@@ -1,6 +1,6 @@
 package com.f.mvc.dao.auth;
 
-import com.f.mvc.entity.RoleMenu;
+import com.f.mvc.entity.auth.RoleMenu;
 
 import java.util.List;
 

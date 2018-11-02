@@ -1,10 +1,10 @@
 package com.f.mvc.action;
 
 import com.f.base.BaseAction;
-import com.f.mvc.entity.Menu;
-import com.f.mvc.entity.RoleMenu;
-import com.f.mvc.service.MenuService;
-import com.f.mvc.service.RoleMenuService;
+import com.f.mvc.entity.auth.Menu;
+import com.f.mvc.entity.auth.RoleMenu;
+import com.f.mvc.service.auth.MenuService;
+import com.f.mvc.service.auth.RoleMenuService;
 import com.f.vo.ResponseVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * User: bvsoo
@@ -108,5 +109,23 @@ public class RoleMenuAction extends BaseAction {
             return ResponseVo.builder().build();
         }
 
+    }
+
+    /**
+     * 查询角色菜单
+     *
+     * @param roleId
+     * @return
+     */
+    @ApiOperation(value = "/query", notes = "查询角色菜单")
+    @RequestMapping(value = "/query", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseVo query(@RequestParam(value = "roleId", defaultValue = "0") long roleId) {
+        if (roleId < 0)
+            return ResponseVo.builder().code(HttpStatus.BAD_REQUEST).build();
+        if (roleId <= 0)
+            return ResponseVo.builder().code(HttpStatus.BAD_REQUEST).build();
+        List<RoleMenu> roleMenus = roleMenuService.findRoleMenuByRoleId(roleId);
+        List<Menu> menus = roleMenus.stream().map(o -> menuService.findMenuById(o.getMenuId())).collect(Collectors.toList());
+        return ResponseVo.builder().data(menus).build();
     }
 }

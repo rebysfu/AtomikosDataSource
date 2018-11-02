@@ -12,6 +12,8 @@ public class DataSourceContextHolder {
 
     private static final ThreadLocal<String> CONTEXT_HOLDER = new ThreadLocal();
 
+    private static String defaultDataSourceKey = "";
+
     /**
      * 获取当前激活的数据源
      *
@@ -37,4 +39,18 @@ public class DataSourceContextHolder {
         CONTEXT_HOLDER.remove();
     }
 
+    /**
+     * 获取默认数据源
+     *
+     * @return data source key
+     */
+    public static String getDefaultDataSourceKey() {
+        return defaultDataSourceKey;
+    }
+    /**
+     * 设置默认数据源
+     * */
+    public static void setDefaultDataSourceKey(String key) {
+        defaultDataSourceKey = key;
+    }
 }

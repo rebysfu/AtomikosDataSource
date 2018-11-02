@@ -4,21 +4,22 @@ import com.f.base.Auth;
 import com.f.configure.properties.TokenConfigure;
 import com.f.helper.TokenHelper;
 import com.f.helper.WebHelper;
-import com.f.mvc.entity.User;
-import com.f.mvc.service.UserService;
+import com.f.mvc.entity.auth.User;
+import com.f.mvc.service.auth.UserService;
 import com.google.common.base.Strings;
-import com.google.common.collect.Lists;
 import io.jsonwebtoken.*;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -34,16 +35,13 @@ import java.io.UnsupportedEncodingException;
  */
 @Log4j2
 @Component
-public class CustomBasicAuthenticationFilter extends BasicAuthenticationFilter {
+public class CustomBasicAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private TokenConfigure tokenConfigure;
     @Autowired
     private UserService userService;
-
-
-    public CustomBasicAuthenticationFilter(AuthenticationManager authenticationManager) {
-        super(authenticationManager);
-    }
+    @Autowired
+    private UserDetailsService userDetailsService;
 
 
     @Override
@@ -67,8 +65,15 @@ public class CustomBasicAuthenticationFilter extends BasicAuthenticationFilter {
             return;
         }
         request.setAttribute(Auth.USER_ID_KEY, user.getId());
-        Authentication authentication = new UsernamePasswordAuthenticationToken(claims, null, Lists.newArrayList());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            UserDetails userDetails = userDetailsService.loadUserByUsername(user.getAccount());
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+            usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            logger.info("authenticated user " + user.getAccount() + ", setting security context");
+            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+        }
         chain.doFilter(request, response);
     }
 

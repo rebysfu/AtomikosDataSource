@@ -18,11 +18,11 @@ public enum DataSourceKey {
     POKER_RECORD("poker_record"),
     PROMOTION("promotion"),
     ANTISPAM("antispam");
-    private static Map<String, DataSourceKey> Cache = Maps.newHashMap();
+    private static final Map<String, DataSourceKey> CACHE = Maps.newHashMap();
 
     static {
         for (DataSourceKey dataSourceKey : DataSourceKey.values()) {
-            Cache.put(dataSourceKey.name, dataSourceKey);
+            CACHE.put(dataSourceKey.name, dataSourceKey);
         }
     }
 
@@ -30,6 +30,6 @@ public enum DataSourceKey {
     private final String name;
 
     public static boolean isNotDefined(String name) {
-        return Cache.get(name) == null;
+        return CACHE.get(name) == null;
     }
 }

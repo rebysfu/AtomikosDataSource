@@ -1,6 +1,6 @@
 package com.f.mvc.dao.auth;
 
-import com.f.mvc.entity.Menu;
+import com.f.mvc.entity.auth.Menu;
 
 import java.util.List;
 

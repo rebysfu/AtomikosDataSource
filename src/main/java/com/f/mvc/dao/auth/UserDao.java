@@ -1,6 +1,6 @@
 package com.f.mvc.dao.auth;
 
-import com.f.mvc.entity.User;
+import com.f.mvc.entity.auth.User;
 import com.github.pagehelper.Page;
 
 import java.util.List;

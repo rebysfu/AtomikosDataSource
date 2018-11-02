@@ -2,7 +2,7 @@ package com.f.mvc.dao.auth;
 
 import com.f.datasource.annotations.DataSource;
 import com.f.enums.DataSourceKey;
-import com.f.mvc.entity.User;
+import com.f.mvc.entity.auth.User;
 import com.f.mvc.mapper.auth.UserMapper;
 import com.github.pagehelper.Page;
 import org.springframework.stereotype.Repository;

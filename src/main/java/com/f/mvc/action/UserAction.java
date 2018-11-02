@@ -1,14 +1,14 @@
 package com.f.mvc.action;
 
 import com.f.base.BaseAction;
-import com.f.mvc.entity.Menu;
-import com.f.mvc.entity.RoleMenu;
-import com.f.mvc.entity.User;
-import com.f.mvc.entity.UserRole;
-import com.f.mvc.service.MenuService;
-import com.f.mvc.service.RoleMenuService;
-import com.f.mvc.service.UserRoleService;
-import com.f.mvc.service.UserService;
+import com.f.mvc.entity.auth.Menu;
+import com.f.mvc.entity.auth.RoleMenu;
+import com.f.mvc.entity.auth.User;
+import com.f.mvc.entity.auth.UserRole;
+import com.f.mvc.service.auth.MenuService;
+import com.f.mvc.service.auth.RoleMenuService;
+import com.f.mvc.service.auth.UserRoleService;
+import com.f.mvc.service.auth.UserService;
 import com.f.vo.ResponseVo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;

@@ -1,6 +1,6 @@
 package com.f.mvc.dao.auth;
 
-import com.f.mvc.entity.SysRole;
+import com.f.mvc.entity.auth.SysRole;
 
 import java.util.List;
 
