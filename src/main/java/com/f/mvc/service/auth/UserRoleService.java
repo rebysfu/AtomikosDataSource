@@ -1,7 +1,7 @@
-package com.f.mvc.service;
+package com.f.mvc.service.auth;
 
 
-import com.f.mvc.entity.UserRole;
+import com.f.mvc.entity.auth.UserRole;
 
 import java.util.List;
 
