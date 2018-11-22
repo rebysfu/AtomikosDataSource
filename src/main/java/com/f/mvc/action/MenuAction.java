@@ -1,8 +1,8 @@
 package com.f.mvc.action;
 
 import com.f.base.BaseAction;
-import com.f.mvc.entity.Menu;
-import com.f.mvc.service.MenuService;
+import com.f.mvc.entity.auth.Menu;
+import com.f.mvc.service.auth.MenuService;
 import com.f.vo.ResponseVo;
 import com.google.common.base.Strings;
 import io.swagger.annotations.Api;

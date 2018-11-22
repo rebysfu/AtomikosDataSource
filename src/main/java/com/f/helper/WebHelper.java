@@ -32,12 +32,7 @@ public final class WebHelper {
      * @throws IOException
      */
     public static void writeMessage(HttpServletResponse response, HttpStatus httpStatus) throws IOException {
-        response.setStatus(HttpStatus.OK.value());
-        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-        PrintWriter printWriter = response.getWriter();
-        printWriter.write(ResponseVo.builder().code(httpStatus).build().toJSONString());
-        printWriter.flush();
-        IOHelper.close(printWriter);
+        writeMessage(response, ResponseVo.builder().code(httpStatus).build());
     }
 
     /**

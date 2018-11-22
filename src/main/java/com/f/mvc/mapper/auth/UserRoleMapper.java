@@ -1,6 +1,6 @@
 package com.f.mvc.mapper.auth;
 
-import com.f.mvc.entity.UserRole;
+import com.f.mvc.entity.auth.UserRole;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -19,7 +19,7 @@ public interface UserRoleMapper {
     List<UserRole> findByUserId(@Param(value = "userId") final Long userId);
 
     @Insert("INSERT INTO `tbl_user_role` (`sys_role_id`,`user_id`,`create_user_id`,`create_time`) VALUES(#{sysRoleId},#{userId},#{createUserId},#{createTime})")
-    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "id", before = false, resultType = Long.class)
+    @Options(useGeneratedKeys = true)
     int addUserRole(UserRole userRole);
 
     @Delete("DELETE FROM `tbl_user_role` WHERE `id`=#{id}")
@@ -29,6 +29,6 @@ public interface UserRoleMapper {
     int deleteUserRoleByParam(@Param(value = "userId") long userId, @Param(value = "param") String param);
 
     @Delete("DELETE FROM `tbl_user_role` WHERE `user_id`=#{userId}")
-    int deleteUserByUserId(@Param(value = "userId") Long userId);
+    int deleteUserRoleByUserId(@Param(value = "userId") Long userId);
 
 }

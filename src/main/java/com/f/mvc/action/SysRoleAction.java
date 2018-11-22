@@ -1,7 +1,7 @@
 package com.f.mvc.action;
 
 import com.f.base.BaseAction;
-import com.f.mvc.service.SysRoleService;
+import com.f.mvc.service.auth.SysRoleService;
 import com.f.vo.ResponseVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

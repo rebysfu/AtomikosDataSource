@@ -1,14 +1,14 @@
 package com.f.mvc.action;
 
 import com.f.base.BaseAction;
-import com.f.mvc.entity.Menu;
-import com.f.mvc.entity.RoleMenu;
-import com.f.mvc.entity.User;
-import com.f.mvc.entity.UserRole;
-import com.f.mvc.service.MenuService;
-import com.f.mvc.service.RoleMenuService;
-import com.f.mvc.service.UserRoleService;
-import com.f.mvc.service.UserService;
+import com.f.mvc.entity.auth.Menu;
+import com.f.mvc.entity.auth.RoleMenu;
+import com.f.mvc.entity.auth.User;
+import com.f.mvc.entity.auth.UserRole;
+import com.f.mvc.service.auth.MenuService;
+import com.f.mvc.service.auth.RoleMenuService;
+import com.f.mvc.service.auth.UserRoleService;
+import com.f.mvc.service.auth.UserService;
 import com.f.vo.ResponseVo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -20,7 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Comparator;
@@ -52,27 +55,6 @@ public class UserAction extends BaseAction {
 
     @Autowired
     private UserService userService;
-
-    /**
-     * 查询账号的菜单
-     *
-     * @param request
-     * @return
-     */
-    @ApiOperation(value = "/test", notes = "测试多线程高并发")
-    @RequestMapping(value = "/test", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseVo test(HttpServletRequest request,
-                           @RequestParam(value = "account", defaultValue = "") String account,
-                           @RequestParam(value = "password", defaultValue = "") String password,
-                           @RequestParam(value = "roleIds") long[] roleIds) {
-
-        User user = new User();
-        user.setAccount(account);
-        user.setPassword(password);
-        userService.testTraction(user, roleIds);
-        return ResponseVo.builder().data(user).build();
-    }
-
 
     /**
      * 查询账号的菜单
@@ -112,7 +94,7 @@ public class UserAction extends BaseAction {
             return ResponseVo.builder().code(HttpStatus.BAD_REQUEST).build();
         Page<User> userPage = PageHelper.startPage(page, size);
         userService.findUserByParam(Strings.isNullOrEmpty(keyword) ? null : keyword, userPage);
-        return ResponseVo.builder().data(userPage).build();
+        return ResponseVo.builder().data(userPage.toPageInfo()).build();
     }
 
 

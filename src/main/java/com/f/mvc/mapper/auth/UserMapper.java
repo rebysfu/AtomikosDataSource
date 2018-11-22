@@ -1,6 +1,6 @@
 package com.f.mvc.mapper.auth;
 
-import com.f.mvc.entity.User;
+import com.f.mvc.entity.auth.User;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -23,7 +23,7 @@ public interface UserMapper {
     User findUserById(@Param(value = "id") final Long id);
 
     @Insert("INSERT INTO `tbl_users` (`account`, `create_time`, `create_user_id`, `modify_user_id`,`modify_time`, `name`, `nick_name`, `password`, `phone`, `remark`) VALUES (#{account},#{createTime},#{createUserId},#{modifyUserId},#{modifyTime},#{name},#{nickName},#{password},#{phone},#{remark})")
-    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyProperty = "id", before = false, resultType = Long.class)
+    @Options(useGeneratedKeys = true)
     int addUser(User user);
 
     @Delete("DELETE FROM `tbl_users` WHERE `id`=#{id}")

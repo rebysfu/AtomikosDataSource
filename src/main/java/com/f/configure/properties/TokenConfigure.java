@@ -3,7 +3,6 @@ package com.f.configure.properties;
 import com.google.common.base.Strings;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
@@ -15,7 +14,6 @@ import java.io.Serializable;
  */
 @Data
 @ConfigurationProperties(prefix = "spring.token")
-@PropertySource("classpath:token.properties")
 @Component
 public class TokenConfigure implements Serializable {
     public static final String DEFAULT_ALGORITHM = "HS512";
